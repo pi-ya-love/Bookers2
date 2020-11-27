@@ -1,0 +1,99 @@
+<header class="navbar  navbar-inverse">
+  <div class="container">
+    <nav class="nav navbar-nav navbar-left">
+      <strong style="color: white;">Bookers</strong>
+    </nav>
+
+    <nav>
+      <ul class="nav navbar-nav navbar-right" style="color: #9d9d9d;">
+        <li>
+          <%= link_to " Home", user_path(current_user), class:"glyphicon glyphicon-home home" %>
+        </li>
+        <li>
+          <%= link_to " Users", users_path, class:"glyphicon glyphicon-user users" %>
+        </li>
+        <li>
+          <%= link_to " Books", books_path, class:"glyphicon glyphicon-book books" %>
+        </li>
+        <li>
+          <%= link_to " logout", destroy_user_session_path, method: :delete, class:"glyphicon glyphicon-log-out logout" %>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-3">
+     <p>User info</p>
+     <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg", size:'100x100' %>
+     <table class="table table-condensed">
+       <tr>
+　　     <th>name</th>
+　　     <th><%= @user.name %></th>
+　     </tr>
+　     <tr>
+　　     <th>introduction</th>
+　　     <th><%= @user.introduction %></th>
+　　   </tr>
+     </table>
+     <%= link_to edit_user_path(), class: "col-xs-12 btn btn-default" do %>
+       <i class="fa fa-wrench"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></i>
+     <% end %>
+
+      <p>New book</p>
+      <%= form_with(model:[@book], local:true) do |f| %>
+
+
+      <% if @book.errors.any? %>
+        <p><%= @book.errors.count %>error prohibited this book from being saved:</p>
+        <ul>
+          <% @book.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+
+        <p>Title</p>
+        <%= f.text_field :title, class:"col-xs-12" %>
+        <p>Opinion</p>
+        <%= f.text_area :body, class:"col-xs-12" %>
+        <%= f.submit 'Create Book', class:"col-xs-12 btn btn-primary" %>
+      <% end %>
+    </div>
+
+    <div class="col-xs-9">
+      <h2>Books</h2>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>title</th>
+            <th>opinion</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @user.present? %>
+            <% @books.each do |book| %>
+              <tr>
+                <td><%= link_to book.title, book_path(book) %> </td>
+                <td><%= book.body %></td>
+                <td></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="col-xs-3 col-xs-offset-9">
+      <p>CopyRight Infratop.inc</p>
+    </div>
+  </div>
+</footer>

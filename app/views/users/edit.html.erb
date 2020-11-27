@@ -1,0 +1,56 @@
+<header class="navbar  navbar-inverse">
+  <div class="container">
+    <nav class="nav navbar-nav navbar-left">
+      <strong style="color: white;">Bookers</strong>
+    </nav>
+
+    <nav>
+      <ul class="nav navbar-nav navbar-right" style="color: #9d9d9d;">
+        <li>
+          <%= link_to " Home", user_path(current_user), class:"glyphicon glyphicon-home home" %>
+        </li>
+        <li>
+          <%= link_to " Users", users_path, class:"glyphicon glyphicon-user users" %>
+        </li>
+        <li>
+          <%= link_to " Books", books_path, class:"glyphicon glyphicon-book books" %>
+        </li>
+        <li>
+          <%= link_to " logout", destroy_user_session_path, method: :delete, class:"glyphicon glyphicon-log-out logout" %>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <%= form_with model:@user, local:true do |f| %>
+
+  <% if @user.errors.any? %>
+    <p><%= @user.errors.count %>error prohibited this book from being saved:</p>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+
+    <h1>User info</h1>
+    <%= f.label :name %>
+    <%= f.text_field :name, autofocus: true%> </br>
+    <%= f.label :image %>
+    <%= f.attachment_field :profile_image %> </br>
+    <%= f.label :introduction %>
+    <%= f.text_area :introduction, autofocus: true %> </br>
+    <%= f.submit "Update User" %>
+    <% end %>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="col-xs-3 col-xs-offset-9">
+      <p>CopyRight Infratop.inc</p>
+    </div>
+  </div>
+</footer>
